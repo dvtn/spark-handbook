@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/java-spark/java-spark.iml" filepath="$PROJECT_DIR$/java-spark/java-spark.iml" />
+      <module fileurl="file://$PROJECT_DIR$/python-spark/python-spark.iml" filepath="$PROJECT_DIR$/python-spark/python-spark.iml" />
       <module fileurl="file://$PROJECT_DIR$/scala-spark/scala-spark.iml" filepath="$PROJECT_DIR$/scala-spark/scala-spark.iml" />
       <module fileurl="file://$PROJECT_DIR$/spark-handbook.iml" filepath="$PROJECT_DIR$/spark-handbook.iml" />
     </modules>

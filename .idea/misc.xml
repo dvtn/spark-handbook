@@ -5,6 +5,7 @@
       <list>
         <option value="$PROJECT_DIR$/scala-spark/scala-spark/pom.xml" />
         <option value="$PROJECT_DIR$/scala-spark/pom.xml" />
+        <option value="$PROJECT_DIR$/java-spark/pom.xml" />
       </list>
     </option>
   </component>

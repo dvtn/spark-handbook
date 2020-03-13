@@ -3,7 +3,7 @@ package com.dvtn.scala
 import java.util.Date
 
 
-object Func {
+object FunctionScala {
   def main(args: Array[String]): Unit = {
     /**
      * 1.方法定义
@@ -96,6 +96,7 @@ object Func {
     /**
      * 7.偏应用函数
      * web用的比较多
+     * 偏应用函数是一个表达式，将方法中不变的参数写上，变化的参数用"_"表示.下次直接调用这个偏应用表达式直接传入变化的参数就可以。
      */
     def printLog(d: Date, log:String) = {
       println("The date is: "+d+", the log is: "+log)
@@ -107,14 +108,15 @@ object Func {
     printLog(date, "ccc")
     //相保持上面的date不变,应用偏应用函数，变的用"_"表示
     val fun7=printLog(date:Date,_:String)
-    fun7("aaa")
-    fun7("bbb")
-    fun7("ccc")
+    fun7("123")
+    fun7("456")
+    fun7("789")
 
     /**
      * 8.高阶函数
      *    1.函数的参数是函数
      *    2.函数的返回是函数
+     *      函数的返回是函数时，要显式声明函数类型
      *    3.函数的参数和返回都是函数
      */
     //函数的参数是函数
@@ -128,6 +130,43 @@ object Func {
     }
 
     println(f81("Hello World",fun8))
+
+    //匿名函数传入
+    val result = f81("您好",(a:Int,b:Int)=>{a*b})
+    println(result)
+
+    //函数的返回是函数
+    def f82(a:Int, b:Int):(String,String)=>String = {
+      val result = a*b
+      def fun1(s:String, s1:String):String = {
+        s+"@"+s1+"#"+result
+      }
+      fun1
+    }
+
+    println(f82(10,20)("您好","中国"))
+
+    //函数的参数和返回都是函数
+    def f83(f:(Int,Int)=>Int):(String,String)=>String = {
+      val result = f(5,6)
+      def fun1(s1:String, s2:String):String = {
+        s1+"@"+s2+"#"+result
+      }
+      fun1
+    }
+
+    println(f83((a:Int,b:Int)=>{a*b})("Hello", "World"))
+
+    /**
+     * 9.柯里化函数
+     * 柯里化函数就是高阶函数的简化版
+     *
+     */
+    def f90(a:Int, b:Int)(c:Int,d:Int) ={
+      a+b+c+d
+    }
+
+    println(f90(1,2)(3,4))
 
   }
 }
