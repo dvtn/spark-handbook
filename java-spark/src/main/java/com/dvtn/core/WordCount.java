@@ -4,10 +4,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.FlatMapFunction;
-import org.apache.spark.api.java.function.Function2;
-import org.apache.spark.api.java.function.PairFunction;
-import org.apache.spark.api.java.function.VoidFunction;
+import org.apache.spark.api.java.function.*;
 import scala.Tuple2;
 
 import java.util.Arrays;
@@ -78,7 +75,25 @@ public class WordCount {
             }
         });
 
-        reduceWords.foreach(new VoidFunction<Tuple2<String, Integer>>() {
+        /**
+         * 排序
+         */
+        JavaPairRDD<String, Integer> sortedWords = reduceWords.mapToPair(new PairFunction<Tuple2<String, Integer>, Integer, String>() {
+            @Override
+            public Tuple2<Integer, String> call(Tuple2<String, Integer> tuple) throws Exception {
+                //return new Tuple2<Integer, String>(tuple._2, tuple._1);
+                return tuple.swap();
+            }
+        }).sortByKey(false).mapToPair(new PairFunction<Tuple2<Integer, String>, String, Integer>() {
+            @Override
+            public Tuple2<String, Integer> call(Tuple2<Integer, String> tuple) throws Exception {
+                //return new Tuple2<String, Integer>(tuple._2, tuple._1);
+                return tuple.swap();
+            }
+        });
+
+
+        sortedWords.foreach(new VoidFunction<Tuple2<String, Integer>>() {
             @Override
             public void call(Tuple2<String, Integer> tuple) throws Exception {
                 System.out.println(tuple);
