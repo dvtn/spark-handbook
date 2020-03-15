@@ -9,6 +9,7 @@
     </profile>
     <profile name="Maven 2" modules="scala-spark">
       <parameters>
+        <parameter value="-make:transitive" />
         <parameter value="-dependencyfile" />
         <parameter value="$PROJECT_DIR$/scala-spark/target/.scala_dependencies" />
       </parameters>
