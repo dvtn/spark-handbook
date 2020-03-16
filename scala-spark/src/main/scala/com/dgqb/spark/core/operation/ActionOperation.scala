@@ -1,4 +1,4 @@
-package com.dvtn.spark.core.operation
+package com.dgqb.spark.core.operation
 
 import org.apache.spark.{SparkConf, SparkContext}
 

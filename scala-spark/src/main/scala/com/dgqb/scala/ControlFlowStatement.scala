@@ -1,4 +1,4 @@
-package com.dvtn.scala
+package com.dgqb.scala
 
 object ControlFlowStatement {
   def main(args: Array[String]): Unit = {

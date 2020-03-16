@@ -1,4 +1,4 @@
-package com.dvtn.scala
+package com.dgqb.scala
 
 /**
  * 模式匹配

@@ -1,4 +1,4 @@
-package com.dvtn.scala
+package com.dgqb.scala
 
 object CollectionsScala {
   def main(args: Array[String]): Unit = {

@@ -1,4 +1,4 @@
-package com.dvtn.spark.core.operation
+package com.dgqb.spark.core.operation
 
 import org.apache.spark.{SparkConf, SparkContext}
 
@@ -6,6 +6,15 @@ object TransformationOperation {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf().setMaster("local").setAppName("TransformationOperationTest")
     val sc = new SparkContext(conf)
+
+    val rdd1 = sc.makeRDD(Array(("林青霞",28),("独孤求败",60),("风清扬",40),("张三丰",80)),3)
+    val rdd2 = sc.makeRDD(Array(("林青霞",1000),("独孤求败",2000),("风清扬",3000),("王重阳",4000)),3)
+    rdd1.join(rdd2).foreach(println)
+
+    /**
+     * join
+     */
+
 
     /**
      * join, leftOuterJoin, rightOuterJoin, fullOuterJoin

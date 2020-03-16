@@ -1,17 +1,11 @@
-package com.dvtn.core.operation;
+package com.yyw.core.operation;
 
 import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.Optional;
 import org.apache.spark.api.java.function.*;
-import scala.Tuple2;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
 public class TransformationOperation {
     public static void main(String[] args) {

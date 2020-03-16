@@ -1,4 +1,4 @@
-package com.dvtn.scala
+package com.dgqb.scala
 
 /**
  * Trait: 物质特性，第一个关键字用extends, 后面都用with

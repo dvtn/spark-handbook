@@ -1,4 +1,4 @@
-package com.dvtn.core.operation;
+package com.yyw.core.operation;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
@@ -7,7 +7,6 @@ import org.apache.spark.api.java.function.VoidFunction;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 public class ActionOperator {
     public static void main(String[] args) {

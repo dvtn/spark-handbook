@@ -9,9 +9,20 @@
     </profile>
     <profile name="Maven 2" modules="scala-spark">
       <parameters>
-        <parameter value="-make:transitive" />
         <parameter value="-dependencyfile" />
         <parameter value="$PROJECT_DIR$/scala-spark/target/.scala_dependencies" />
+      </parameters>
+    </profile>
+    <profile name="Maven 3" modules="xxx">
+      <parameters>
+        <parameter value="-dependencyfile" />
+        <parameter value="$PROJECT_DIR$/xxx/target/.scala_dependencies" />
+      </parameters>
+    </profile>
+    <profile name="Maven 4" modules="xxxx">
+      <parameters>
+        <parameter value="-dependencyfile" />
+        <parameter value="$PROJECT_DIR$/xxxx/target/.scala_dependencies" />
       </parameters>
     </profile>
   </component>

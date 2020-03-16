@@ -1,4 +1,4 @@
-package com.dvtn.scala
+package com.dgqb.scala
 
 /**
  * case class: 样例类

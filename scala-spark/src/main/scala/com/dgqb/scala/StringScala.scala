@@ -1,4 +1,5 @@
-package com.dvtn.scala
+package com.dgqb.scala
+
 /**
  * 其实就是java中的String
  */

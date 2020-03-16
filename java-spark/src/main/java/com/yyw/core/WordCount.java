@@ -1,4 +1,4 @@
-package com.dvtn.core;
+package com.yyw.core;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;

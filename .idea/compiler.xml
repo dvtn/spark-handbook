@@ -11,8 +11,11 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="java-spark" target="8" />
-      <module name="scala-spark" target="12" />
+      <module name="java-spark" target="1.7" />
+      <module name="scala-spark" target="1.5" />
+      <module name="xxx" target="1.5" />
+      <module name="xxxx" target="1.5" />
+      <module name="xxxxxx" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

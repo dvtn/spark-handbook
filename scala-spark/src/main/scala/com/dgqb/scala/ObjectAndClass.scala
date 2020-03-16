@@ -1,4 +1,4 @@
-package com.dvtn.scala
+package com.dgqb.scala
 
 /**
  * 1.scala中定义在object中的变量，方法都是静态的。object叫对象，相当于java中的单例对象。object不可以传参。Trait也不可以传参。
