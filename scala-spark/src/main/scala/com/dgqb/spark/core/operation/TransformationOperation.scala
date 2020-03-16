@@ -6,22 +6,68 @@ object TransformationOperation {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf().setMaster("local").setAppName("TransformationOperationTest")
     val sc = new SparkContext(conf)
-
-    val rdd1 = sc.makeRDD(Array(("林青霞",28),("独孤求败",60),("风清扬",40),("张三丰",80)),3)
-    val rdd2 = sc.makeRDD(Array(("林青霞",1000),("独孤求败",2000),("风清扬",3000),("王重阳",4000)),3)
-    rdd1.join(rdd2).foreach(println)
+    sc.setLogLevel("ERROR")
 
     /**
-     * join
+     * distinct:去重
      */
+    val rdd = sc.makeRDD(Array(("林青霞",28),("独孤求败",60),("风清扬",40),("张三丰",80),("独孤求败",60),("风清扬",40),("张三丰",80)),3)
+    println("----------->distinct<-------------")
+    rdd.distinct().foreach(println)
 
 
-    /**
-     * join, leftOuterJoin, rightOuterJoin, fullOuterJoin
-     * 作用在K,V格式的RDD上。根据K进行连接，对(K,V) join(K,W) 返回(K,(V,W)
-     * join后的分区数与父RDD分区数多的那一个相同
-     */
+//    val rdd1 = sc.makeRDD(Array(("林青霞",28),("独孤求败",60),("风清扬",40),("张三丰",80)),3)
+//    val rdd2 = sc.makeRDD(Array(("林青霞",28),("独孤求败",60),("风清扬",3000),("王重阳",4000)),3)
+//
+//    /**
+//     * subtract:取关集
+//     */
+//    println("----------->intersection<-------------")
+//    rdd1.subtract(rdd2).foreach(println)
+//
+//
+//    /**
+//     * intersection:取交集
+//     */
+//    println("----------->intersection<-------------")
+//    rdd1.intersection(rdd2).foreach(println)
 
+
+
+    //    val rdd1 = sc.makeRDD(Array(("林青霞",28),("独孤求败",60),("风清扬",40),("张三丰",80)),3)
+//    val rdd2 = sc.makeRDD(Array(("林青霞",1000),("独孤求败",2000),("风清扬",3000),("王重阳",4000)),3)
+//
+//    /**
+//     * union
+//     */
+//    println("----------->union<-------------")
+//    rdd1.union(rdd2).foreach(println)
+//
+//
+//    /**
+//     * join: 对(K,V) join (K,W) 返回(K,(V,W)
+//     *
+//     * join后的分区数与父RDD分区数多的那一个相同
+//     *
+//     *
+//     * (风清扬,(40,3000))
+//     * (独孤求败,(60,2000))
+//     * (林青霞,(28,1000))
+//     */
+//    println("----------->join<-------------")
+//    rdd1.join(rdd2).foreach(println)
+//
+//    /**
+//     * leftOuterJoin
+//     */
+//    println("----------->leftOuterJoin<-------------")
+//    rdd1.leftOuterJoin(rdd2).foreach(println)
+//
+//    println("----------->rightOuterJoin<-------------")
+//    rdd1.rightOuterJoin(rdd2).foreach(println)
+//
+//    println("----------->fullOuterJoin<-------------")
+//    rdd1.fullOuterJoin(rdd2).foreach(println)
 
 
     //    /**
