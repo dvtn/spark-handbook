@@ -9,11 +9,20 @@ object TransformationOperation {
     sc.setLogLevel("ERROR")
 
     /**
-     * distinct:去重
+     * mapPartitions 一个分区一个分区地处理数据
      */
     val rdd = sc.makeRDD(Array(("林青霞",28),("独孤求败",60),("风清扬",40),("张三丰",80),("独孤求败",60),("风清扬",40),("张三丰",80)),3)
-    println("----------->distinct<-------------")
-    rdd.distinct().foreach(println)
+    rdd.mapPartitions(iter => {
+      println("插入数据库...........")
+      iter
+    },true).collect()
+
+//    /**
+//     * distinct:去重
+//     */
+//    val rdd = sc.makeRDD(Array(("林青霞",28),("独孤求败",60),("风清扬",40),("张三丰",80),("独孤求败",60),("风清扬",40),("张三丰",80)),3)
+//    println("----------->distinct<-------------")
+//    rdd.distinct().foreach(println)
 
 
 //    val rdd1 = sc.makeRDD(Array(("林青霞",28),("独孤求败",60),("风清扬",40),("张三丰",80)),3)
