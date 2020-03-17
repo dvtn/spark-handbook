@@ -1,11 +1,16 @@
 package com.yyw.core.operation;
 
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.*;
+import scala.Tuple2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 public class TransformationOperation {
     public static void main(String[] args) {
@@ -15,17 +20,180 @@ public class TransformationOperation {
         JavaSparkContext sc = new JavaSparkContext(conf);
         sc.setLogLevel("ERROR");
 
-        /**
-         * distinct
-         */
-        JavaRDD<String> rdd = sc.parallelize(Arrays.asList("a", "a", "b", "b", "b", "c", "d"), 3);
+        ///**
+        // * zipWithIndex
+        // * 将RDD中的元素和这个元素在RDD中的索引号(从0开始）组成成(K,V)对.
+        // */
+        //
+        //JavaPairRDD<String, String> rdd1 = sc.parallelizePairs(Arrays.asList(
+        //        new Tuple2<String, String>("独孤求败", "剑魔"),
+        //        new Tuple2<String, String>("独孤求败", "剑魔剑魔"),
+        //        new Tuple2<String, String>("风清扬", "独孤九剑"),
+        //        new Tuple2<String, String>("风清扬", "独孤九剑"),
+        //        new Tuple2<String, String>("张三丰", "太极拳"),
+        //        new Tuple2<String, String>("张三丰", "太极拳太极拳")
+        //        ));
+        //JavaPairRDD<Tuple2<String, String>, Long> zipWithIndexRdd = rdd1.zipWithIndex();
+        //zipWithIndexRdd.foreach(new VoidFunction<Tuple2<Tuple2<String, String>, Long>>() {
+        //    @Override
+        //    public void call(Tuple2<Tuple2<String, String>, Long> tuple) throws Exception {
+        //        System.out.println(tuple);
+        //
+        //    }
+        //});
 
-        rdd.distinct().foreach(new VoidFunction<String>() {
-            @Override
-            public void call(String s) throws Exception {
-                System.out.println(s);
-            }
-        });
+        ///**
+        // * zip 将两个RDD中的元素(KV格式/非KV格式)变成一个KV格式的RDD, 两个RDD的每个分区元素个数必须相同。
+        // *  一对一压缩
+        // */
+        //
+        //JavaPairRDD<String, String> rdd1 = sc.parallelizePairs(Arrays.asList(
+        //        new Tuple2<String, String>("独孤求败", "剑魔"),
+        //        new Tuple2<String, String>("独孤求败", "剑魔剑魔"),
+        //        new Tuple2<String, String>("风清扬", "独孤九剑"),
+        //        new Tuple2<String, String>("风清扬", "独孤九剑"),
+        //        new Tuple2<String, String>("张三丰", "太极拳"),
+        //        new Tuple2<String, String>("张三丰", "太极拳太极拳")
+        //));
+        //JavaPairRDD<String, Integer> rdd2 = sc.parallelizePairs(Arrays.asList(
+        //        new Tuple2<String, Integer>("独孤求败", 100),
+        //        new Tuple2<String, Integer>("独孤求败", 10000),
+        //        new Tuple2<String, Integer>("风清扬", 200),
+        //        new Tuple2<String, Integer>("风清扬", 20000),
+        //        new Tuple2<String, Integer>("张三丰", 300),
+        //        new Tuple2<String, Integer>("张三丰", 30000)
+        //));
+        //
+        //JavaPairRDD<Tuple2<String, String>, Tuple2<String, Integer>> zipRdd = rdd1.zip(rdd2);
+        //zipRdd.foreach(new VoidFunction<Tuple2<Tuple2<String, String>, Tuple2<String, Integer>>>() {
+        //    @Override
+        //    public void call(Tuple2<Tuple2<String, String>, Tuple2<String, Integer>> tuple) throws Exception {
+        //        System.out.println(tuple);
+        //    }
+        //});
+
+        ///**
+        // * groupByKey
+        // *  作用在KV格式的RDD上。根据key进行分组。作用在(K,V)返回(K, Iterable<V>)
+        // */
+        //JavaPairRDD<String, String> rdd1 = sc.parallelizePairs(Arrays.asList(
+        //        new Tuple2<String, String>("独孤求败", "剑魔"),
+        //        new Tuple2<String, String>("独孤求败", "剑魔剑魔"),
+        //        new Tuple2<String, String>("风清扬", "独孤九剑"),
+        //        new Tuple2<String, String>("风清扬", "独孤九剑"),
+        //        new Tuple2<String, String>("张三丰", "太极拳"),
+        //        new Tuple2<String, String>("张三丰", "太极拳太极拳")
+        //));
+        //
+        //JavaPairRDD<String, Iterable<String>> groupByKeyRdd = rdd1.groupByKey();
+        //groupByKeyRdd.foreach(new VoidFunction<Tuple2<String, Iterable<String>>>() {
+        //    @Override
+        //    public void call(Tuple2<String, Iterable<String>> tuple) throws Exception {
+        //        System.out.println(tuple);
+        //    }
+        //});
+
+
+        ///**
+        // * mapPartitionWithIndex
+        // *  类似于mapPartitions, 除此之外还会携带分区的索引值
+        // */
+        //JavaRDD<String> rdd1 = sc.parallelize(Arrays.asList(
+        //        "独孤求败", "风清扬", "任我行", "东方不败",
+        //        "张学友", "刘德华", "黎明", "郭富城",
+        //        "华为", "阿里", "拼多多", "百度"
+        //), 3);
+        //
+        //System.out.println("rdd1 partition size = "+ rdd1.partitions().size());
+        //
+        //JavaRDD<String> mapPartitionsWithIndex = rdd1.mapPartitionsWithIndex(new Function2<Integer, Iterator<String>, Iterator<String>>() {
+        //    @Override
+        //    public Iterator<String> call(Integer index, Iterator<String> iterator) throws Exception {
+        //        List<String> list = new ArrayList<>();
+        //        while (iterator.hasNext()) {
+        //            String value = iterator.next();
+        //            //System.out.println("partition index = 【" + index + "】, value = 【" + value + "】");
+        //            list.add(" rdd1 partition index = 【" + index + "】, value = 【" + value + "】");
+        //        }
+        //        return list.iterator();
+        //    }
+        //}, true);
+
+        //List<String> collect = mapPartitionsWithIndex.collect();
+        //for(String s:collect){
+        //    System.out.println(s);
+        //}
+
+
+        ///**
+        // * repartition
+        // *  增加或减少分区。会产生shuffle类的算子。（多个分区分到一个分区不会产生shuffle)
+        // *
+        // */
+        //JavaRDD<String> rdd2 = mapPartitionsWithIndex.repartition(4); //也可以改成2查看减少分区的情况
+        //JavaRDD<String> rdd3 = rdd2.mapPartitionsWithIndex(new Function2<Integer, Iterator<String>, Iterator<String>>() {
+        //    @Override
+        //    public Iterator<String> call(Integer index, Iterator<String> iterator) throws Exception {
+        //        List<String> list = new ArrayList<>();
+        //        while (iterator.hasNext()) {
+        //            String value = iterator.next();
+        //            //System.out.println("partition index = 【" + index + "】, value = 【" + value + "】");
+        //            list.add("rdd2 partition index = 【" + index + "】, value = 【" + value + "】");
+        //        }
+        //        return list.iterator();
+        //    }
+        //}, true);
+        //
+        //
+        //List<String> collect = rdd3.collect();
+        //for(String s: collect){
+        //    System.out.println(s);
+        //}
+
+
+
+
+        ///**
+        // * coalesce
+        // *  coalesce常用来减少分区，第二个参数是减少分区的过程中是否产生shuffle
+        // *  true为产生shuffle, false为不产生shuffle。默认是false
+        // *  如果coalesce设置的分区数比原来的RDD的分区数还多的话，每二个参数为false时不起作用，如果设置成true, 效果和repartition一样。
+        // *  即repartition(numPartitions) = coalesce(numPartitions, true)
+        // */
+        //JavaRDD<String> coalesceRdd = mapPartitionsWithIndex.coalesce(2,true);
+        ////JavaRDD<String> coalesceRdd = mapPartitionsWithIndex.coalesce(4,false);
+        ////System.out.println("coalesceRdd partition size: "+ coalesceRdd.partitions().size()); //3
+        //JavaRDD<String> rdd4 = coalesceRdd.mapPartitionsWithIndex(new Function2<Integer, Iterator<String>, Iterator<String>>() {
+        //    @Override
+        //    public Iterator<String> call(Integer index, Iterator<String> iterator) throws Exception {
+        //        List<String> list = new ArrayList<>();
+        //        while (iterator.hasNext()) {
+        //            String value = iterator.next();
+        //            //System.out.println("partition index = 【" + index + "】, value = 【" + value + "】");
+        //            list.add("coalesceRdd partition index = 【" + index + "】, value = 【" + value + "】");
+        //        }
+        //        return list.iterator();
+        //    }
+        //}, true);
+        //
+        //
+        //List<String> collect = rdd4.collect();
+        //    for(String s: collect){
+        //        System.out.println(s);
+        //    }
+
+
+        ///**
+        // * distinct
+        // */
+        //JavaRDD<String> rdd = sc.parallelize(Arrays.asList("a", "a", "b", "b", "b", "c", "d"), 3);
+        //
+        //rdd.distinct().foreach(new VoidFunction<String>() {
+        //    @Override
+        //    public void call(String s) throws Exception {
+        //        System.out.println(s);
+        //    }
+        //});
 
         //rdd.mapToPair(new PairFunction<String, String, Integer>() {
         //    @Override
