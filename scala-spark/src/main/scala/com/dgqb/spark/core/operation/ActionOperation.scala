@@ -8,12 +8,25 @@ object ActionOperation {
     val sc = new SparkContext(conf)
 
     /**
-     * foreachPartiton: 一个分区一个分区的处理数据
+     * reduce
      */
-    val rdd = sc.makeRDD(Array(("林青霞",28),("独孤求败",60),("风清扬",40),("张三丰",80),("独孤求败",60),("风清扬",40),("张三丰",80)),3)
-    rdd.foreachPartition(iter=>{
-      iter.foreach(println)
-    })
+
+    /**
+     * countByKey
+     */
+
+    /**
+     * countByValue
+     */
+
+
+    //    /**
+//     * foreachPartiton: 一个分区一个分区的处理数据
+//     */
+//    val rdd = sc.makeRDD(Array(("林青霞",28),("独孤求败",60),("风清扬",40),("张三丰",80),("独孤求败",60),("风清扬",40),("张三丰",80)),3)
+//    rdd.foreachPartition(iter=>{
+//      iter.foreach(println)
+//    })
 
     //    val lines = sc.textFile("./scala-spark/data/words")
 //
