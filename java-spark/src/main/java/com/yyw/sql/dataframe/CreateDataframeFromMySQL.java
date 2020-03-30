@@ -8,10 +8,16 @@ import java.util.Properties;
 
 public class CreateDataframeFromMySQL {
     public static void main(String[] args) {
+        /**
+         * spark.sql.shuffle.partitions ：
+         * 该参数用来配置数据落地或者表连接查询或者聚合计算时的分区数，默认值是200。
+         */
         SparkSession spark = SparkSession.builder()
                 .master("local")
                 .appName("createDataframefromMySQLApp")
+                .config("spark.sql.shuffle.partitions","1")
                 .getOrCreate();
+        spark.sparkContext().setLogLevel("ERROR"); //设置控制台日志显示的级别
         /**
          * 每一种方式读取MySQL数据库表
          */
